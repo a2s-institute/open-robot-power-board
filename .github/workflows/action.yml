@@ -6,41 +6,27 @@ jobs:
   export-electronics:
       name: Export Electronics
       runs-on: ubuntu-22.04
-      strategy:
-        fail-fast: false
-        matrix:
-          kicad-version: ['8.0']
-          type: ['schematic_pdf', 'schematic_svg', 'schematic_bom', 'schematic_netlist', 'pcb_step', 'pcb_pos', 'pcb_gerbers', 'pcb_drill', 'pcb_gerbers_drill']
-          include:
-            - type: schematic_pdf
-              file: odri-power-board.kicad_sch
-            - type: schematic_svg
-              file: odri-power-board.kicad_sch
-            - type: schematic_bom
-              file: odri-power-board.kicad_sch
-            - type: schematic_netlist
-              file: odri-power-board.kicad_sch
-            - type: pcb_step
-              file: odri-power-board.kicad_pcb
-            - type: pcb_pos
-              file: odri-power-board.kicad_pcb
-            - type: pcb_gerbers
-              file: odri-power-board.kicad_pcb
-            - type: pcb_drill
-              file: odri-power-board.kicad_pcb
-            - type: pcb_gerbers_drill
-              file: odri-power-board.kicad_pcb
+      env:
+        PROJECT: odri-power-board
       steps:
       - uses: actions/checkout@v3
       - uses: actions-for-kicad/setup-kicad@v1.0
         with:
-          version: ${{ matrix.kicad-version }}
+          version: "8.0"
       - uses: actions-for-kicad/generate-kicad-files@v1.0
         with:
-          file: 'hardware/${{ matrix.file }}'
-          type: ${{ matrix.type }}
+          type: schematic_pdf
+          file: ${{ env.PROJECT }}.kicad_sch
+      - uses: actions-for-kicad/generate-kicad-files@v1.0
+        with:
+          type: schematic_svg
+          file: ${{ env.PROJECT }}.kicad_sch
+      - uses: actions-for-kicad/generate-kicad-files@v1.0
+        with:
+          type: schematic_bom
+          file: ${{ env.PROJECT }}.kicad_sch
       - name: Upload 
         uses: actions/upload-artifact@v4
         with:
-          name: odri-power-board
-          path: ./
+          name: ${{ env.PROJECT }}-bom.xml
+          path: ./${{ env.PROJECT }}-bom.xml
