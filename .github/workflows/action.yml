@@ -1,0 +1,14 @@
+steps:
+- uses: actions/checkout@v3
+- uses: actions-for-kicad/setup-kicad@v1.0
+  with:
+    version: '8.0'
+- uses: actions-for-kicad/generate-kicad-files@v1.0
+  with:
+    file: './hardware/odri-power-board.kicad_sch'
+    type: 'schematic_pdf'
+- name: Upload 
+  uses: actions/upload-artifact@v3
+  with:
+    name: 'odri-power-board.pdf'
+    path: './odri-power-board.pdf'
