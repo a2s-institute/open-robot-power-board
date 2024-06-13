@@ -25,8 +25,13 @@ jobs:
         with:
           type: schematic_bom
           file: hardware/${{ env.PROJECT }}.kicad_sch
-      - name: Upload 
+      - name: Upload BOM
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT }}-bom.xml
           path: ./${{ env.PROJECT }}-bom.xml
+      - name: Upload Schematic
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PROJECT }}.pdf
+          path: ./${{ env.PROJECT }}.pdf
