@@ -16,15 +16,15 @@ jobs:
       - uses: actions-for-kicad/generate-kicad-files@v1.0
         with:
           type: schematic_pdf
-          file: ${{ env.PROJECT }}.kicad_sch
+          file: hardware/${{ env.PROJECT }}.kicad_sch
       - uses: actions-for-kicad/generate-kicad-files@v1.0
         with:
           type: schematic_svg
-          file: ${{ env.PROJECT }}.kicad_sch
+          file: hardware/${{ env.PROJECT }}.kicad_sch
       - uses: actions-for-kicad/generate-kicad-files@v1.0
         with:
           type: schematic_bom
-          file: ${{ env.PROJECT }}.kicad_sch
+          file: hardware/${{ env.PROJECT }}.kicad_sch
       - name: Upload 
         uses: actions/upload-artifact@v4
         with:
